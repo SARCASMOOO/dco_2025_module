@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Update hooks for demo.
+ */
+
+use Drupal\node\Entity\Node;
+
+/**
+ * Map the first and last name to a full name field.
+ */
+function dco_demo_update_11001() {
+  $moduleName = 'dco_demo';
+  $entityTypeManager = \Drupal::service('entity_type.manager');
+  $nodeStorage = $entityTypeManager->getStorage('node');
+  $bundle = 'blog';
+
+  $nids = $nodeStorage->getQuery()
+    ->condition('type', $bundle)
+    ->accessCheck(FALSE)
+    ->execute();
+
+  $nodes = Node::loadMultiple($nids);
+
+  // Load and update each node by ID.
+  foreach ($nodes as $node) {
+    if ($node) {
+      $firstname = $node->get('firstname')->value;
+      $lastname = $node->get('lastname')->value;
+
+      $node->set('field_full_name', $firstname . ' ' . $lastname);
+
+      $node->save();
+      \Drupal::logger($moduleName)->notice('Node updated: @title', ['@title' => $node->getTitle()]);
+    }
+  }
+}

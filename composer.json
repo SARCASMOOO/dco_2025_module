@@ -1,0 +1,50 @@
+{
+  "name": "drupalcamp/dco-demo",
+  "description": "Drupal Camp Demo.",
+  "type": "drupal-custom-module",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": {
+    "composer": {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    },
+    "asset-packagist": {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  },
+  "require": {},
+  "require-dev": {
+    "dropfort/dropfort_module_build": "^2.0"
+  },
+  "config": {
+    "bin-dir": "bin/",
+    "sort-packages": true,
+    "github-protocols": [
+      "https"
+    ],
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "drupal/core-composer-scaffold": true
+    }
+  },
+  "extra": {
+    "drupal-scaffold": {
+      "gitignore": false,
+      "allowed-packages": [
+        "dropfort/dropfort_module_build"
+      ],
+      "file-mapping": {},
+      "initial": {
+        ".editorconfig": "../.editorconfig",
+        ".gitattributes": "../.gitattributes"
+      },
+      "locations": {
+        "web-root": "drupal-ignore/"
+      }
+    }
+  },
+  "version": "1.0.0"
+}

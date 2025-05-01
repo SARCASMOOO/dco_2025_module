@@ -1,0 +1,58 @@
+{
+  "name": "@dropfort/dropfort_module_build",
+  "description": "A basic Drupal module/theme set up to give a starting point for development.",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "init": "composer install && npm install",
+    "preinstall": "npx npm-force-resolutions || true",
+    "postinstall": "rm -rf drupal-ignore",
+    "prepare": "husky || true",
+    "commit": "npx git-cz",
+    "release": "standard-version",
+    "clean": "rm -rf node_modules && rm -rf bin && rm -rf vendor",
+    "build": "npm run compile:styles && npm run compile:scripts",
+    "build:prod": "npm run build && npm run clean && npm install --omit dev",
+    "build:dev": "npm run compile:styles:dev && npm run compile:scripts:dev",
+    "compile:scripts": "npm run compile:js",
+    "compile:scripts:dev": "npm run compile:js -- --sourcemap inline",
+    "compile:styles": "npm run compile:sass -- --no-source-map && npm run compile:css -- --no-map",
+    "compile:styles:dev": "npm run compile:sass -- --embed-source-map && npm run compile:css",
+    "compile:js": "rollup --config rollup.config.mjs",
+    "compile:sass": "sass scss:dist/css",
+    "compile:css": "postcss 'dist/css/**/*.css' --replace",
+    "eslint": "eslint .",
+    "prettier": "prettier '**/*.{js,mjs,cjs,scss,sass}'",
+    "stylelint": "stylelint '**/*.{scss,sass}' --allow-empty-input --config stylelint.config.mjs",
+    "lint": "npm run lint:styles && npm run lint:scripts && npm run lint:php",
+    "lint:fix": "npm run lint:styles:fix && npm run lint:scripts:fix && npm run lint:php:fix",
+    "lint:styles": "npm run stylelint && npm run prettier -- --check",
+    "lint:styles:fix": "npm run stylelint -- --fix && npm run prettier -- --write",
+    "lint:scripts": "npm run eslint && npm run prettier -- --check",
+    "lint:scripts:fix": "npm run eslint -- --fix && npm run prettier -- --write",
+    "lint:php": "phpcs --extensions=php,module,inc,install,test,profile,theme --ignore=bin/*,config/*,node_modules/*,vendor/*,*.md --standard=Drupal,DrupalPractice ./",
+    "lint:php:fix": "phpcbf --extensions=php,module,inc,install,test,profile,theme --ignore=bin/*,config/*,node_modules/*,vendor/*,*.md --standard=Drupal,DrupalPractice ./",
+    "test:compatibility": "npm run test:compatibility:php && test:compatibility:js",
+    "test:compatibility:php": "phpcs --extensions=php,module,inc,install,test,profile,theme --ignore=**/testing/*,**/test/*,**/node_modules/*,**/vendor/*,**/bin/*,**/docker/*,*.md,web/autoload.php,web/*/contrib/*,web/core/*,web/libraries/*,web/sites/*/files/* --standard=PHPCompatibility -p --runtime-set testVersion 8.0- ./",
+    "test:compatibility:js": "echo 'This project does not define javascript compatiblity tests'",
+    "watch": "npm run watch:js & npm run watch:sass",
+    "watch:js": "npm run compile:js -- --sourcemap inline --watch",
+    "watch:sass": "npm run compile:sass -- --embed-source-map --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.dropfort.com:dropfort/dropfort_module_build.git"
+  },
+  "keywords": [
+    "drupal"
+  ],
+  "author": "Coldfront Labs Inc.",
+  "license": "GPL-2.0-or-later",
+  "dependencies": {},
+  "devDependencies": {
+    "dropfort-module-build-dependencies": "^1.0.0"
+  },
+  "resolutions": {
+    "is-fullwidth-code-point": "3.0.0"
+  }
+}

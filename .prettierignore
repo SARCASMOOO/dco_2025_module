@@ -1,0 +1,17 @@
+# This file is managed by dropfort/dropfort_module_build.
+# Delete this file and run `composer scaffold` to regenerate it.
+
+.gitlab/*
+.github/*
+.husky/*
+.vscode/*
+bin/*
+ci/*
+config/*
+node_modules/*
+vendor/*
+drupal-ignore/*
+dist/*
+!.*.js
+!.*.mjs
+!.*.cjs

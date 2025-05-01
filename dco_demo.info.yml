@@ -1,0 +1,6 @@
+name: DCO Demo Module
+type: module
+description: A module to hold update hooks.
+package: dco
+core_version_requirement: ^9 || ^10 || ^11
+version: 1.0.0
